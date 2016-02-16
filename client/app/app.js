@@ -32,21 +32,19 @@ var initMap = function(data){
     center: {lat: 37.7833, lng: -122.4167},
     zoom: 12
   });
-
+  //creates a global infowindow that will show only one window at a time
+  var infoWindow = new google.maps.InfoWindow();
   //Geocoder is an object Google maps w/ various methods API to pull their geocoding functionality
   geocoder = new google.maps.Geocoder();
   //loop through data returned from db to place on map
   for (var i = 0; i < data.length; i++){
-    addMarker(map, data[i]);
+    addMarker(map, data[i], infoWindow);
   }
 };
 
 //add a marker to map. Instance needs to be an obj with itemLocation and itemName properties.
-var addMarker = function(map, instance){
-    //create an instance of an info window that will show data when clicked
-    var infowindow = new google.maps.InfoWindow({
-        content: instance.itemName
-      });
+var addMarker = function(map, instance, infoWindow){
+
     console.log('hit add marker');
     //create a new instance of a google maps marker, will be created for each item in our db
     var marker = new google.maps.Marker({
@@ -56,10 +54,11 @@ var addMarker = function(map, instance){
         title: 'Hello World!'
       });
 
-    //create the click listener on each marker to show their respective info window
-    marker.addListener('click', function(){
-        infowindow.open(map, marker);
-      });
+    //creates a listener that will attach this instance's data to the global info window and open it
+    google.maps.event.addListener(marker, 'click', function() {
+      infoWindow.setContent(instance.itemName);
+      infoWindow.open(map, this);
+    });
 };
 
 //grab the address the client has typed in to send to turn into longitude/latitude
