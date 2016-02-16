@@ -47,10 +47,11 @@ var addMarker = function(map, instance){
     var infowindow = new google.maps.InfoWindow({
         content: instance.itemName
       });
-    console.log('hit add marker')
+    console.log('hit add marker');
     //create a new instance of a google maps marker, will be created for each item in our db
     var marker = new google.maps.Marker({
         position: instance.itemLocation,
+        animation: google.maps.Animation.DROP,
         map: map,
         title: 'Hello World!'
       });

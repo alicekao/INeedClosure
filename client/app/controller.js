@@ -31,17 +31,17 @@ var app = angular.module('myApp', ['map.services'])
   //'toSave' has item prop and LatLng properties
   var saveToDB = function(toSave){
   return $http.post('/', toSave)
-    
+
     //after item has been saved to db, returned data has a data property
     //so we need to access data.data, see below
     .then(function(data){
-      
+
       //data.data has itemName prop, itemLocation prop, and _id prop, which are all expected since this is how
       //our mongoDB is formatted. Anything returned from db should have these props
       Map.addMarker(map, data.data);
       //the 'map' argument here is referencing the global map declared in app.js
       //this could be manipulated in chrome console by user. Future refactor could be to store
-      //map within Map factory instead of global space. 
+      //map within Map factory instead of global space.
 
     }, function(err){
       console.log(err);
