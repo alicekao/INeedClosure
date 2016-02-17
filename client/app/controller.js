@@ -45,14 +45,16 @@ var app = angular.module('myApp', ['map.services'])
 
   $scope.ip = function() {
     startSpinner();
+    //check for the HTML5 geolocation feature, supported in most modern browsers
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success);
-      function success(position) {
-       var lat = position.coords.latitude;
-       var long = position.coords.longitude;
-       console.log(lat, long);
-       DBActions.saveToDB({item: $scope.user.item, LatLng: {lat: lat, lng: long}, createdAt: new Date()});
-      }
+      //async request to get users location from positioning hardware
+      navigator.geolocation.getCurrentPosition(function(position) {
+        //if getCurrentPosition is method successful, returns a coordinates object
+        var lat = position.coords.latitude;
+        var long = position.coords.longitude;
+        console.log('from your location, lat and lng are: ', lat, long);
+        DBActions.saveToDB({item: $scope.user.item, LatLng: {lat: lat, lng: long}, createdAt: new Date()});
+      });
     } else {
       error('Geo Location is not supported');
     }
