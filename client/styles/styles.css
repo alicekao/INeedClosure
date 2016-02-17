@@ -16,3 +16,7 @@ html, body {
 input {
   width: 20%;
 }
+
+.spinner {
+  visibility: hidden;
+}
