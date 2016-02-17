@@ -128,3 +128,11 @@ var formatDate = function(dateObj) {
   var year = dateObj.getFullYear().toString().slice(2);
   return month + '/' + day + '/' + year;
 };
+
+var startSpinner = function() {
+  $('.spinner img').css('visibility', 'visible');
+};
+
+var stopSpinner = function() {
+  $('.spinner img').css('visibility', 'hidden');
+};

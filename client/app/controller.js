@@ -44,6 +44,7 @@ var app = angular.module('myApp', ['map.services'])
   };
 
   $scope.ip = function() {
+    startSpinner();
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success);
       function success(position) {
@@ -68,7 +69,7 @@ var app = angular.module('myApp', ['map.services'])
     //after item has been saved to db, returned data has a data property
     //so we need to access data.data, see below
     .then(function(data){
-
+      stopSpinner();
       //data.data has itemName prop, itemLocation prop, and _id prop, which are all expected since this is how
       //our mongoDB is formatted. Anything returned from db should have these props
       Map.addMarker(map, data.data, infoWindow);
